@@ -20,16 +20,22 @@ namespace SchoolManagementSystem.Controllers
 
         public IActionResult Subjects()
         {
+            ViewData["user"] = "Admin";
+
             return View();
         }
 
         public IActionResult Students()
         {
+            ViewData["user"] = "Admin";
+
             return View();
         }
 
         public IActionResult Admin()
         {
+            ViewData["user"] = "Admin";
+
             return View();
         }
 

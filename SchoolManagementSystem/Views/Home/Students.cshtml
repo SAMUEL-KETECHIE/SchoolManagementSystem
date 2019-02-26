@@ -1,8 +1,23 @@
 ﻿@{
     ViewData["Title"] = "Students Page";
     ViewBag.CurrentPage = "Students";
+
+    var user = ViewData["user"];
+
 }
 
+
 <div class="text-center">
-    <h1 class="display-4 text-left">Students Board</h1>
+    <br />
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="" id="inputArea">
+                <b class="text">Search Student&nbsp;:&nbsp;&nbsp;</b>
+                <input class="k-textbox" type=text id="txtSearch" placeholder="Search Student by Name,Student ID or Class..." />
+                <button id="btnSearch" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
 </div>

@@ -69,3 +69,19 @@
 .dash-item-danger {
     background: #ff0000;
 }
+
+#txtSearch{
+    width:350px;
+    height:35px;
+    margin-right:-10px;
+    border-radius:5px;
+    text-decoration-style:none;
+}
+
+.hide-area{
+    display:none;
+}
+
+.show-area{
+    display:block;
+}

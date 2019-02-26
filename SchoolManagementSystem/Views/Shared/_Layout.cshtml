@@ -15,6 +15,8 @@
               crossorigin="anonymous"
               integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
     </environment>
+    <script src="~/custom/kendo/js/jquery.min.js"></script>
+
     <link rel="stylesheet" href="~/css/site.css" />
     @*<link href="~/custom/font-awesome/css/font-awesome.min.css" rel="stylesheet" />*@
     <link href="~/custom/lumino/css/font-awesome.min.css" rel="stylesheet" />
@@ -43,7 +45,7 @@
     @{
         //var user = User.Identity.Name.Split('\\');
         //var userName = user.ElementAt(1);
-        var user = ViewData["user"];
+        var user = ViewData["user"].ToString();
         var schName = "Wendolin Pre School";
     }
     <nav class="navbar navbar-toggleable-sm navbar-light navbar-fixed-top bg-blue border-bottom box-shadow mb-3" role="navigation">
@@ -62,8 +64,6 @@
         </div><!-- /.container-fluid -->
     </nav>
 
-
-
     <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
         <div class="profile-sidebar">
             <div class="profile-userpic">
@@ -79,12 +79,9 @@
         <div class="divider"></div>
 
         <ul class="nav menu">
-            <li class="nav-item">
-                <a class="nav-link @(ViewBag.CurrentPage == "Home" ? "active":"nav-txt")" asp-area="" asp-controller="Home" asp-action="Index"><span class="glyphicon glyphicon-home"></span>&nbsp;&thinsp; Dashboard</a>
-            </li>
             <li class="divider"></li>
             <li class="nav-item">
-                <a class="nav-link @(ViewBag.CurrentPage == "Admin" ? "active":"nav-txt")" asp-area="" asp-controller="Home" asp-action="Admin"><span class="glyphicon glyphicon-user"></span>&nbsp;&thinsp; Admin Page</a>
+                <a class="nav-link @(ViewBag.CurrentPage == "Admin" ? "active":"nav-txt")" asp-area="" asp-controller="Home" asp-action="@(user == "Admin" ? "Admin" : "Index")"><span class="glyphicon glyphicon-user"></span>&nbsp;&thinsp; Dashboard</a>
             </li>
             <li class="divider"></li>
             <li class="nav-item">
@@ -122,9 +119,11 @@
             <li class="nav-item">
                 <a class="nav-link @(ViewBag.CurrentPage == "Events" ? "active":"nav-txt")" asp-area="" asp-controller="Home" asp-action="Events"><span class="fa fa-calendar"></span>&nbsp;&thinsp; Events</a>
             </li>
-
         </ul>
     </div><!--/.sidebar-->
+
+
+
     <div class="container">
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
@@ -132,11 +131,11 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            Copyright &copy; @DateTime.Now.Year - <span class="text-info">@schName. All rights reserved.</span>
-        </div>
-    </footer>
+    @*<footer class="border-top footer navbar-fixed-bottom" style="height:55px;">
+            <div class="container">
+                Copyright &copy; @DateTime.Now.Year - <span class="text-info">@schName. All rights reserved.</span>
+            </div>
+        </footer>*@
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -156,10 +155,12 @@
                 integrity="sha256-E/V4cWE4qvAeO5MOhjtGtqDzPndRO1LBk8lJ/PR7CA4=">
         </script>
     </environment>
+
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     <script src="~/custom/wenstrap/utilities.js"></script>
     <script src="~/custom/bootbox/bootbox.min.js"></script>
+    <script src="~/custom/kendo/js/kendo.all.min.js"></script>
 
     @RenderSection("Scripts", required: false)
 </body>

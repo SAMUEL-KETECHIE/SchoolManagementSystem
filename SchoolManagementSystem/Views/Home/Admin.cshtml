@@ -1,9 +1,14 @@
 ﻿@{
     ViewData["Title"] = "Admin Page";
     ViewBag.CurrentPage = "Admin";
+
+    var user = ViewData["user"];
+
+
 }
 
-<div class="center text-center">
+
+<div class="text-center">
     <h1 class="display-4 text-left">Dashboard</h1>
     <br />
     <hr />
@@ -37,21 +42,115 @@
         </div>
         <div class="col col-md-1"></div>
     </div>
-        <br />
-        <hr />
-        <br />
+    <br />
+    <hr />
+    <br />
 
-        <div class="row">
-            <div class="col col-md-3">
-                <button class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>Add New Student</button>
-            </div>
-            <div class="col col-md-3">
-                <button class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>Add New Teacher</button>
-            </div>
-            <div class="col col-md-3">
-                <button class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>Add New Subject</button>
-            </div>
+    <div class="row">
+        <div class="col col-md-4">
+            <button class="btn btn-success" id="addStudent"><span class="glyphicon glyphicon-plus"></span>Add New Student</button>
         </div>
-
-        <hr />
+        <div class="col col-md-4">
+            <button class="btn btn-success" id="addTeacher"><span class="glyphicon glyphicon-plus"></span>Add New Teacher</button>
+        </div>
+        <div class="col col-md-4">
+            <button class="btn btn-success" id="addSubject"><span class="glyphicon glyphicon-plus"></span>Add New Subject</button>
+        </div>
     </div>
+    <hr />
+    <div class="row text-left">
+        <div class="col col-md-4 col-sm-4">
+            <!--Add Student Form-->
+            <form class="hide-area" id="studentGrid">
+                @*<label class="label label-info" for="stdno">Student No</label>
+        <input class="form-control" type="text" id="stdno" name="stdno" disabled />*@
+                <label class="label label-info" for="stdname">Student Full Name</label>
+                <input class="form-control" type="text" autocomplete="off" placeholder="Enter Student's full name" id="stdname" name="stdname" />
+                <br />
+                <label class="label label-info" for="stdclass">Student Class</label>
+                <select class="form-control" id="stdclass" name="stdclass">
+                    @**use values from db for options *@
+                </select>
+                <br />
+                <label class="label label-info" for="stddob">Student Date of Birth</label>
+                <input class="form-control" type="date" id="stddob" name="stddob" />
+                <br />
+                <label class="label label-info" for="stdaddress">Address/Location</label>
+                <input class="form-control" type="text" autocomplete="off" placeholder="Enter address here" id="stdaddress" name="stdaddress" />
+                <hr />
+                <label class="label label-info" for="stdparent">Parent/Guardian</label>
+                <input class="form-control" type="text" autocomplete="off" placeholder="Enter Parent's Name" id="stdparent" name="stdparent" />
+                <br />
+                <label class="label label-info" for="stdenrolldate">Date Enrolled</label>
+                <input class="form-control" type="date" id="stdenrolldate" name="stdenrolldate" />
+                <br />
+                <label class="label label-info" for="stdgender">Gender</label>
+                <select class="form-control" id="stdgender" name="stdgender">
+                    <option>--Select--</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+                <br />
+                <label class="label label-info" for="stdimage">Student Image</label>
+                <input class="form-control btn-warning" type="file" placeholder="Choose File" id="stdimage" name="stdimage" />
+                <br />
+                <button id="btn_stdcancel" class="btn btn-danger pull-right" type="submit"><span class="fa fa-times-circle"></span>&nbsp;Cancel</button>
+                <button id="btn_stdsave" class="btn btn-success pull-right" type="submit"><span class="fa fa-check-circle"></span>&nbsp;Save</button>
+                <button id="btn_finish_stud" class="btn btn-primary pull-left" type="submit"><span class="fa fa-close"></span>&nbsp;Finish</button>
+            </form>
+        </div>
+        <div class="col col-md-4 col-sm-4">
+            <!--Add Teachers Form-->
+            <form class="hide-area" id="teacherGrid">
+                @*<label class="label label-info" for="txtid">Teacher No</label>
+        <input class="form-control" type="text" id="txtno" name="txtno" disabled />*@
+
+                <label class="label label-info" for="teachername">Teacher Full Name</label>
+                <input class="form-control" type="text" autocomplete="off" placeholder="Enter Teacher's full name" id="teachername" name="teachername" />
+                <br />
+
+                <label class="label label-info" for="teacherdob">Teacher's Date of Birth</label>
+                <input class="form-control" type="date" id="teacherdob" name="teacherdob" />
+                <br />
+                <label class="label label-info" for="teacheraddress">Address/Location</label>
+                <input class="form-control" type="text" autocomplete="off" placeholder="Enter address here" id="teacheraddress" name="teacheraddress" />
+                <br />
+                <label class="label label-info" for="teacherdate">Date Employed</label>
+                <input class="form-control" type="date" id="teacherdate" name="teacherdate" />
+                <br />
+                <label class="label label-info" for="teachergender">Gender</label>
+                <select class="form-control" id="teachergender" name="teachergender">
+                    <option>--Select--</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+                <br />
+                <label class="label label-info" for="teacherimage">Teacher's Image</label>
+                <input class="form-control btn-warning" type="file" placeholder="Choose File" id="teacherimage" name="teacherimage" /><br />
+
+                <button id="btn_teachercancel" class="btn btn-danger pull-right" type="submit"><span class="fa fa-times-circle"></span>&nbsp;Cancel</button>
+                <button id="btn_teachersave" class="btn btn-success pull-right" type="submit"><span class="fa fa-check-circle"></span>&nbsp;Save</button>
+                <button id="btn_finish_teach" class="btn btn-primary pull-left" type="submit"><span class="fa fa-close"></span>&nbsp;Finish</button>
+
+            </form>
+        </div>
+        <div class="col col-md-4 col-sm-4">
+            <!--Add Subjects Form-->
+            <form class="hide-area" id="subjectGrid">
+                <label class="label label-info" for="subjectname">Subject Name</label>
+                <input class="form-control" type="text" autocomplete="off" placeholder="Enter subject name" id="subjectname" name="subjectname" />
+                <br />
+                <button id="btn_subjectcancel" class="btn btn-danger pull-right" type="submit"><span class="fa fa-times-circle"></span>&nbsp;Cancel</button>
+                <button id="btn_subjectsave" class="btn btn-success pull-right" type="submit"><span class="fa fa-check-circle"></span>&nbsp;Save</button>
+                <button id="btn_finish_sub" class="btn btn-primary pull-left" type="submit"><span class="fa fa-close"></span>&nbsp;Finish</button>
+
+            </form>
+        </div>
+    </div>
+    <hr />
+
+</div>
+<section>
+    <script src="~/js/custom/Admin.js"></script>
+</section>
