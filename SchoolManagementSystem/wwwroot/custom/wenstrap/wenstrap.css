@@ -85,3 +85,34 @@
 .show-area{
     display:block;
 }
+
+/* Template Days */
+
+#calendar {
+    width: 100%;
+}
+
+#special-days{
+    border-radius:5px;
+}
+.exhibition,
+.party,
+.cocktail {
+    font-weight: bold;
+}
+
+.exhibition {
+    color: #ff9e00;
+}
+
+.party {
+    color: #ff4081;
+}
+
+.cocktail {
+    color: #00a1e8;
+}
+
+.italic {
+    font-style: italic;
+}

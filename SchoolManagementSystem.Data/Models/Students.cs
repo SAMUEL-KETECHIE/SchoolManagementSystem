@@ -18,6 +18,6 @@ namespace SchoolManagementSystem.Data.Models
         public bool IsActive { get; set; }
         public string Image { get; set; }
         public int ClassId { get; set; }
-        public IEnumerable<Classes> Classes { get; set; }
+       // public IEnumerable<Classes> Classes { get; set; }
     }
 }

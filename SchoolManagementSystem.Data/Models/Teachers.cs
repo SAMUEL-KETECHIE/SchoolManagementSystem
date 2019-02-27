@@ -13,6 +13,6 @@ namespace SchoolManagementSystem.Data.Models
         public string Image { get; set; }
         public bool IsActive { get; set; }
         public int SubjectId { get; set; }
-        public IEnumerable<Subjects> Subjects { get; set; }
+       // public IEnumerable<Subjects> Subjects { get; set; }
     }
 }
