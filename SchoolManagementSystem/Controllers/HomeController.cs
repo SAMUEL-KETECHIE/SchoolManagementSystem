@@ -12,6 +12,7 @@ namespace SchoolManagementSystem.Controllers
     {
         public IActionResult Index()
         {
+            //Use this for sample. Remember to remove it whe done
             ViewData["user"] = "Admin";
             if (ViewData["user"].ToString() != "Admin")
                 return View();

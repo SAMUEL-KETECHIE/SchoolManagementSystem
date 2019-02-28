@@ -98,7 +98,11 @@
 .exhibition,
 .party,
 .cocktail {
+    text-align:center;
     font-weight: bold;
+    border-radius:100%;
+    border:medium;
+    background:#000000;
 }
 
 .exhibition {

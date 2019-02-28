@@ -2,30 +2,103 @@
  * Creator: Samuel Wendolin Ketechie
  * Date: February 25,2019
  */
-$(function () {
 
+let apiUrl = "/api/admin";
+
+let classes = {};
+let students = {};
+let teachers = {};
+let subjects = {};
+
+$(function () {
+    getAllClasses();
+    getAllStudents();
+    getAllTeachers();
+    getAllSubjects();
 });
 
 //Get Classes
 function getAllClasses() {
     $.ajax({
-        url: "",
+        url: apiUrl + "/getallclasses",
         type: "Get",
         dataType: "json",
-        contentType: "application/json"
-    }).success(function (data) {
-        let opt = '<option value="-1">Please Select a Class</option>';
-        if (data !== null)
-            for (var i = 0; i < data.length; i++) {
-                opt += '<option value="' + data[i].ClassId + '">' + data[i].ClassName + '</option>';
+        contentType: "application/json",
+        success: function (data) {
+            let opt = '<option value="-1">-- Select a Class --</option>';
+            if (data !== null) {
+                let output = data.data;
+                for (let i = 0; i < output.length; i++) {
+                    opt += '<option value="' + output[i].classId + '">' + output[i].className + '</option>';
+                }
+                classes = data.data;
+                $("#stdclass").html(opt);
+                let classObj = classes;
+                let classCount = counter(classObj);
+                $("#totalClass").html(classCount);
+
             }
-        $("#stdclass").html(opt);
+                
+        }
     });
 }
 
+//Get Students
+function getAllStudents() {
+    $.ajax({
+        url: apiUrl + "/getallstudents",
+        type: "Get",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data) {
+            if (data !== null)
+                students = data.data;
+            let totalStudents = counter(students);
+            $("#totalStuds").html(totalStudents);
+        }
+    });
+}
 
+//Get all Teachers
+function getAllTeachers() {
+    $.ajax({
+        url: apiUrl + "/getallteachers",
+        type: "Get",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data) {
+            if (data !== null)
+                teachers = data.data;
+            let totalTeachers = counter(teachers);
+            $("#totalTeach").html(totalTeachers);
+        }
+    });
+}
 
+//Get all Subjects
+function getAllSubjects() {
+    $.ajax({
+        url: apiUrl + "/getallsubjects",
+        type: "Get",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data) {
+            if (data !== null)
+                subjects = data.data;
+            let totalSubjects = counter(subjects);
+            $("#totalSub").html(totalSubjects);
+        }
+    });
+}
 
+//funtion for counting elements in an array
+function counter(e) {
+    let count = 0;
+    for (let i = 0; i < e.length; i++) {
+        count++;
+    }
+    return count;
+}
 
 
 

@@ -33,7 +33,7 @@ namespace SchoolManagementSystem.Data.Helpers
                     var result = new List<Students>();
                     var command = _dbHelper.CreateCommand("getallstudents", _ConnectionStr);
                     conn.Open();
-                    var reader =await command.ExecuteReaderAsync();
+                    var reader = await command.ExecuteReaderAsync();
 
                     while (reader.Read())
                     {
