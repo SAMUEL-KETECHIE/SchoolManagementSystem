@@ -6,18 +6,18 @@ namespace SchoolManagementSystem.Data.Utilities
 {
     public class ResponseModel
     {
-        public Array Data { get; set; }
+        public dynamic Data { get; set; }
         public int Count { get; set; }
         public string Errors { get; set; }
 
 
-        public ResponseModel(Array data, int count)
+        public ResponseModel(dynamic data, int count)
         {
             this.Data = data;
             this.Count = count;
         }
 
-        public ResponseModel(Array data)
+        public ResponseModel(dynamic data)
         {
             this.Data = data;
         }

@@ -11,6 +11,9 @@ let teachers = {};
 let subjects = {};
 
 $(function () {
+    document.querySelector("#snack_bar_warning").style.display = "none";
+    document.querySelector("#snack_bar_success").style.display = "none";
+
     getAllClasses();
     getAllStudents();
     getAllTeachers();
@@ -100,10 +103,58 @@ function counter(e) {
     return count;
 }
 
+//Save New Subject
+$("#btn_subjectsave").on('click', function (e) {
+    e.preventDefault();
+    if (confirm("Are you sure you want to add this subject ?")) {
+        saveSubject();
+    }
+});
+
+function saveSubject() {
+    var model = {
+        subjectName: $("#subjectname").val()
+    };
+
+    $.ajax({
+        url: apiUrl + "/addnewsubject",
+        type: "Post",
+        contentType: "application/json",
+        data: JSON.stringify(model),
+        success: function (data) {
+            if (data !== null) {
+                $("#subjectname").val("");
+                showSnackBarSuccess();
+            } else {
+                showSnackBarWarning();
+            }
+        }
+    });
+}
+
+
+
+//Snack Bars
+function showSnackBarSuccess() {
+    let x = document.getElementById("snack_bar_success");
+    x.className = "show";
+    setTimeout(function () {
+        x.className = x.className.replace("show", "");
+    }, 9050);
+
+}
+
+function showSnackBarWarning() {
+    let x = document.getElementById("snack_bar_warning");
+    x.className = "show";
+    setTimeout(function () {
+        x.className = x.className.replace("show", "");
+    }, 9050);
+
+}
 
 
 //Button Operations
-
 function showStudentGrid(e) {
     e.preventDefault();
     let x = document.getElementById("studentGrid");

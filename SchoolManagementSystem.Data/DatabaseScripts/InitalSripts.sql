@@ -180,3 +180,63 @@ create or replace function addclasses(classname text)
      $$;
 
 --select * from addclasses('Primary 2');
+
+create or replace function adduser(username text,password text,roleid integer)
+     returns setof "Users"
+     LANGUAGE plpgsql
+     AS $$
+         declare newId integer;
+     BEGIN
+       insert into "Users"("Username","Password", "RoleId") values (username,password,roleid) returning "UserId" into newId;
+
+       return query select * from "Users" where "UserId" =newId;
+     END;
+     $$;
+
+--select * from adduser('Admin','admin',1);
+
+create or replace function addrole(rolename text)
+     returns setof "Role"
+     LANGUAGE plpgsql
+     AS $$
+         declare newId integer;
+     BEGIN
+       insert into "Role"("RoleName") values (rolename) returning "RoleId" into newId;
+
+       return query select * from "Role" where "RoleId" =newId;
+     END;
+     $$;
+
+--select * from addrole('Administrators');
+
+
+create or replace function getstudentbyinfo(info text) returns SETOF "Students"
+	language plpgsql
+as $$
+BEGIN
+  RETURN QUERY SELECT * from "Students" where "StudentName" like info or "StudentNo" like info or "StudentAddress" like info;
+END;
+$$;
+
+--select * from getstudentbyinfo('Legon,Accra');
+
+create or replace function getteacherbyinfo(info text) returns SETOF "Teachers"
+	language plpgsql
+as $$
+BEGIN
+  RETURN QUERY SELECT * from "Teachers" where "TeacherName" like info or "TeacherNo" like info or "TeacherAddress" like info;
+END;
+$$;
+
+--select * from getteacherbyinfo('Alfred Barnor');
+
+create or replace function getsubjectbyinfo(info text) returns SETOF "Subjects"
+	language plpgsql
+as $$
+BEGIN
+  RETURN QUERY SELECT * from "Subjects" where "SubjectName" like info;
+END;
+$$;
+
+-- * from getsubjectbyinfo('Mathematics');
+
