@@ -1,5 +1,5 @@
 ﻿/*******************************************
-//***   STYLE SHEET FOR SNACK BAR           
+//***   WENSTRAP CSS           
 //***   CREATOR: SAMUEL WENDOLIN KETECHIE    	   
 //***   DATE: DEC 26TH, 2018 	
 ******************************************/
@@ -156,4 +156,11 @@
 
 .italic {
     font-style: italic;
+}
+
+.image-chooser{
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
 }

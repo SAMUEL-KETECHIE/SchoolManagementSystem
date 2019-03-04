@@ -9,6 +9,8 @@ let classes = {};
 let students = {};
 let teachers = {};
 let subjects = {};
+let imageValue = "";
+
 
 $(function () {
     document.querySelector("#snack_bar_warning").style.display = "none";
@@ -19,7 +21,27 @@ $(function () {
     getAllTeachers();
     getAllSubjects();
 });
+//Image Uploading
+function UploadImage(dataFunc = null, fileid) {
+    var formData = new FormData();
+    formData.append('file', fileid); // stdimage is the input type="file" control
 
+    $.ajax({
+        url: apiUrl + "/saveimage",
+        type: 'POST',
+        data: formData,
+        processData: false,  // tell jQuery not to process the data
+        contentType: false,  // tell jQuery not to set contentType
+        success: function (result) {
+            imageValue = result.toString();
+            return dataFunc(imageValue);
+        },
+        error: function (jqXHR) {
+            alert("Image failed to saved");
+        }
+    });
+
+}
 //Get Classes
 function getAllClasses() {
     $.ajax({
@@ -90,6 +112,12 @@ function getAllSubjects() {
                 subjects = data.data;
             let totalSubjects = counter(subjects);
             $("#totalSub").html(totalSubjects);
+
+            let opt = '<option value="-1">-- Select a Subject --</option>';
+            for (let i = 0; i < subjects.length; i++) {
+                opt += '<option value="' + subjects[i].subjectId + '">' + subjects[i].subjectName + '</option>';
+            }
+            $("#teachersubject").html(opt);
         }
     });
 }
@@ -132,6 +160,85 @@ function saveSubject() {
     });
 }
 
+//Save Student
+$("#btn_stdsave").on('click', function (e) {
+    e.preventDefault();
+    if (confirm("Are you sure you want to add this student ?")) {
+        UploadImage(saveStudent, $('#stdimage')[0].files[0]);
+    }
+});
+
+function saveStudent(img) {
+
+    var model = {
+        studentName: $("#stdname").val(),
+        classId: $("#stdclass").val(),
+        dateOfBirth: $("#stddob").val(),
+        studentAddress: $("#stdaddress").val(),
+        parentName: $("#stdparent").val(),
+        dateEnrolled: $("#stdenrolldate").val(),
+        gender: $("#stdgender").val(),
+        image: img
+    };
+    
+    $.ajax({
+        url: apiUrl + "/addnewstudent",
+        type: "Post",
+        contentType: "application/json",
+        data: JSON.stringify(model),
+        success: function (data) {
+            if (data !== null) {
+                $("#stdname").val("");
+                $("#stdclass").val("");
+                $("#stddob").val("");
+                $("#stdaddress").val("");
+                $("#stdparent").val("");
+                $("#stdenrolldate").val("");
+                $("#stdgender").val("");
+                $("#stdimage").val("");
+                showSnackBarSuccess();
+            } else {
+                showSnackBarWarning();
+            }
+        }
+    });
+}
+
+//Save Teacher
+$("#btn_teachersave").on('click', function (e) {
+    e.preventDefault();
+    if (confirm("Are you sure you want to add this teacher ?")) {
+        UploadImage(saveTeacher, $('#teacherimage')[0].files[0]);
+    }
+});
+
+function saveTeacher(img) {
+
+    var model = {
+        teacherName: $("#teachername").val(),
+        subjectId: $("#teachersubject").val(),
+        teacherAddress: $("#teacheraddress").val(),
+        image: img
+    };
+
+    $.ajax({
+        url: apiUrl + "/addnewteacher",
+        type: "Post",
+        contentType: "application/json",
+        data: JSON.stringify(model),
+        success: function (data) {
+            if (data !== null) {
+                $("#teachername").val("");
+                $("#teachersubject").val("");
+                $("#teacheraddress").val("");
+                $("#teacherimage").val("");
+                showSnackBarSuccess();
+            } else {
+                showSnackBarWarning();
+            }
+        }
+    });
+}
 
 
 //Snack Bars

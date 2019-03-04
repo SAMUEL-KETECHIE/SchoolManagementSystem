@@ -1,13 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using SchoolManagementSystem.Data.Helpers;
 using SchoolManagementSystem.Data.Models;
 using SchoolManagementSystem.Data.Utilities;
 using SchoolManagementSystem.Models;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using System.Net.Http.Headers;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,10 +22,12 @@ namespace SchoolManagementSystem.Controllers.ApiControllers
     {
         private readonly DataHelper _dataHelper;
         private readonly ILogger<AdminController> _logger;
-        public AdminController(DataHelper dataHelper, ILogger<AdminController> logger)
+        private readonly IConfiguration _configuration;
+        public AdminController(DataHelper dataHelper, ILogger<AdminController> logger, IConfiguration configuration)
         {
             _dataHelper = dataHelper;
             _logger = logger;
+            _configuration = configuration;
         }
 
         #region Fetching Data Region
@@ -127,21 +132,27 @@ namespace SchoolManagementSystem.Controllers.ApiControllers
                 if (ModelState.IsValid)
                 {
                     var age = CalculateAge(model.DateOfBirth);
-
+                    var studNo = await GenerateStudentNo();
+                    var imageUrl = model.Image;
                     var res = await _dataHelper.AddNewStudent(new PostStudentModel
                     {
                         StudentName = model.StudentName,
-                        StudentNo = model.StudentNo,
+                        StudentNo = studNo,
                         StudentAddress = model.StudentAddress,
                         DateOfBirth = model.DateOfBirth,
                         Age = age,
                         Gender = model.Gender,
                         ParentName = model.ParentName,
                         DateEnrolled = model.DateEnrolled,
-                        Image = model.Image,
+                        Image = imageUrl,
                         ClassId = model.ClassId
                     });
-
+                    _ = await _dataHelper.AddNewUser(new PostUserModel
+                    {
+                        Username = model.StudentName,
+                        Password = studNo,
+                        RoleId = _configuration.GetValue<int>("App:StudentRole")
+                    });
                     return new ResponseModel(res);
                 }
                 return new ResponseModel("An error occurred, please check the inputs");
@@ -164,7 +175,7 @@ namespace SchoolManagementSystem.Controllers.ApiControllers
                 if (ModelState.IsValid)
                 {
 
-                    var res = await _dataHelper.AddNewSubject(new PostSubjectModel { SubjectName=model.SubjectName});
+                    var res = await _dataHelper.AddNewSubject(new PostSubjectModel { SubjectName = model.SubjectName });
 
                     return new ResponseModel(res);
                 }
@@ -179,11 +190,113 @@ namespace SchoolManagementSystem.Controllers.ApiControllers
             }
         }
 
+        [HttpPost]
+        public async Task<ResponseModel> AddNewTeacher([FromBody]TeacherRequestModel model)
+        {
+            try
+            {
+
+                if (ModelState.IsValid)
+                {
+                    var teachNo = await GenerateTeacherNo();
+
+                    var res = await _dataHelper.AddNewTeacher(new PostTeacherModel
+                    {
+                        TeacherName = model.TeacherName,
+                        IsActive = true,
+                        TeacherAddress = model.TeacherAddress,
+                        TeacherNo = teachNo,
+                        Image = model.Image,
+                        SubjectId = model.SubjectId
+                    });
+                    _ = await _dataHelper.AddNewUser(new PostUserModel
+                    {
+                        Username = model.TeacherName,
+                        Password = teachNo,
+                        RoleId = _configuration.GetValue<int>("App:TeachRole")
+                    });
+                    return new ResponseModel(res);
+                }
+                return new ResponseModel("An error occurred, please check the inputs");
+
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"An error occurred executing {nameof(AddNewTeacher)} on Admin Controller.");
+                return new ResponseModel(e.Message);
+                throw e;
+            }
+        }
 
         #endregion post
 
-
+        //Image Uploader
+        [HttpPost]
+       // public string SaveImage(IFormFile file)
+        public string SaveImage()
+        {
+            try
+            {
+                var file = Request.Form.Files[0];
+                string folderName = "Uploads";
+                string webRootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
+                string newPath = Path.Combine(webRootPath, folderName);
+                if (!Directory.Exists(newPath))
+                {
+                    Directory.CreateDirectory(newPath);
+                }
+                if (file.Length > 0)
+                {
+                    string fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    string fullPath = Path.Combine(newPath, fileName);
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                        return fullPath;
+                    }
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"An error occurred executing {nameof(SaveImage)} on Admin Controller. {e.Message}");
+                throw e;
+            }
+        }
         #region Helper methods
+        public async Task<string> GenerateStudentNo()
+        {
+            var students = await _dataHelper.GetAllStudents();
+            var std = students.ToArray();
+            var lastNo = 0;
+            if (std.Length == 0)
+            {
+                lastNo = 1;
+            }
+            else
+            {
+                lastNo = std.Length + 1;
+            }
+            var stdNo = _configuration.GetValue<string>("App:StudentNo") + lastNo.ToString();
+            return stdNo;
+        }
+
+        public async Task<string> GenerateTeacherNo()
+        {
+            var teacher = await _dataHelper.GetAllTeachers();
+            var std = teacher.ToArray();
+            var lastNo = 0;
+            if (std.Length == 0)
+            {
+                lastNo = 1;
+            }
+            else
+            {
+                lastNo = std.Length + 1;
+            }
+            var stdNo = _configuration.GetValue<string>("App:TeacherNo") + lastNo.ToString();
+            return stdNo;
+        }
 
         private static int CalculateAge(DateTime dateOfBirth)
         {

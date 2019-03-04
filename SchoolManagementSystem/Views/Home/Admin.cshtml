@@ -68,9 +68,7 @@
                 <input class="form-control" type="text" autocomplete="off" placeholder="Enter Student's full name" id="stdname" name="stdname" />
                 <br />
                 <label class="label label-info" for="stdclass">Student Class</label>
-                <select class="form-control" id="stdclass" name="stdclass">
-                    @**use values from db for options *@
-                </select>
+                <select class="form-control" id="stdclass" name="stdclass"></select>
                 <br />
                 <label class="label label-info" for="stddob">Student Date of Birth</label>
                 <input class="form-control" type="date" id="stddob" name="stddob" />
@@ -92,7 +90,8 @@
                 </select>
                 <br />
                 <label class="label label-info" for="stdimage">Student Image</label>
-                <input class="form-control btn-warning" type="file" placeholder="Choose File" id="stdimage" name="stdimage" />
+                <input class="form-control btn-warning image-chooser" type="file" placeholder="Choose File" id="stdimage" name="stdimage" />
+                <p class="text text-danger">* Image must be 250cm x 180cm</p>
                 <br />
                 <button id="btn_stdcancel" class="btn btn-danger pull-right" type="submit"><span class="fa fa-times-circle"></span>&nbsp;Cancel</button>
                 <button id="btn_stdsave" class="btn btn-success pull-right" type="submit"><span class="fa fa-check-circle"></span>&nbsp;Save</button>
@@ -109,26 +108,22 @@
                 <input class="form-control" type="text" autocomplete="off" placeholder="Enter Teacher's full name" id="teachername" name="teachername" />
                 <br />
 
-                <label class="label label-info" for="teacherdob">Teacher's Date of Birth</label>
+                @*<label class="label label-info" for="teacherdob">Teacher's Date of Birth</label>
                 <input class="form-control" type="date" id="teacherdob" name="teacherdob" />
-                <br />
+                <br />*@
                 <label class="label label-info" for="teacheraddress">Address/Location</label>
                 <input class="form-control" type="text" autocomplete="off" placeholder="Enter address here" id="teacheraddress" name="teacheraddress" />
                 <br />
-                <label class="label label-info" for="teacherdate">Date Employed</label>
+                @*<label class="label label-info" for="teacherdate">Date Employed</label>
                 <input class="form-control" type="date" id="teacherdate" name="teacherdate" />
-                <br />
-                <label class="label label-info" for="teachergender">Gender</label>
-                <select class="form-control" id="teachergender" name="teachergender">
-                    <option>--Select--</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
-                </select>
+                <br />*@
+                <label class="label label-info" for="teachersubject">Subject</label>
+                <select class="form-control" id="teachersubject" name="teachersubject"></select>
                 <br />
                 <label class="label label-info" for="teacherimage">Teacher's Image</label>
                 <input class="form-control btn-warning" type="file" placeholder="Choose File" id="teacherimage" name="teacherimage" /><br />
-
+                <p class="text text-danger">* Image must be 250cm x 180cm</p>
+                <br />
                 <button id="btn_teachercancel" class="btn btn-danger pull-right" type="submit"><span class="fa fa-times-circle"></span>&nbsp;Cancel</button>
                 <button id="btn_teachersave" class="btn btn-success pull-right" type="submit"><span class="fa fa-check-circle"></span>&nbsp;Save</button>
                 <button id="btn_finish_teach" class="btn btn-primary pull-left" type="submit"><span class="fa fa-close"></span>&nbsp;Finish</button>

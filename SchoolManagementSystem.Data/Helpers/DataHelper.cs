@@ -320,15 +320,13 @@ namespace SchoolManagementSystem.Data.Helpers
                     command.Parameters.Add(new NpgsqlParameter("teacherno", NpgsqlTypes.NpgsqlDbType.Text));
                     command.Parameters.Add(new NpgsqlParameter("address", NpgsqlTypes.NpgsqlDbType.Text));
                     command.Parameters.Add(new NpgsqlParameter("image", NpgsqlTypes.NpgsqlDbType.Text));
-                    command.Parameters.Add(new NpgsqlParameter("IsActive", NpgsqlTypes.NpgsqlDbType.Boolean));
-                    command.Parameters.Add(new NpgsqlParameter("SubjectId", NpgsqlTypes.NpgsqlDbType.Integer));
+                    command.Parameters.Add(new NpgsqlParameter("subjectid", NpgsqlTypes.NpgsqlDbType.Integer));
 
                     command.Parameters[0].Value = model.TeacherName;
                     command.Parameters[1].Value = model.TeacherNo;
                     command.Parameters[2].Value = model.TeacherAddress;
                     command.Parameters[3].Value = model.Image;
-                    command.Parameters[4].Value = model.IsActive;
-                    command.Parameters[5].Value = model.SubjectId;
+                    command.Parameters[4].Value = model.SubjectId;
                     var reader = await command.ExecuteReaderAsync();
 
                     while (reader.Read())
