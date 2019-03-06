@@ -67,6 +67,52 @@ namespace SchoolManagementSystem.Data.Helpers
             }
         }
 
+        public async Task<List<Students>> GetStudentByInfo(string info)
+        {
+            try
+            {
+                using (var conn = new NpgsqlConnection(_ConnectionStr))
+                {
+                    var result = new List<Students>();
+                    var command = _dbHelper.CreateCommand("getstudentbyinfo", _ConnectionStr);
+                    command.Parameters.Add(new NpgsqlParameter("info", NpgsqlTypes.NpgsqlDbType.Text));
+                    command.Parameters[0].Value = info;
+
+                    conn.Open();
+                    var reader = await command.ExecuteReaderAsync();
+
+                    while (reader.Read())
+                    {
+                        result.Add(new Students
+                        {
+                            StudentId = reader.GetFieldValue<int>(0),
+                            StudentName = reader.GetFieldValue<string>(1),
+                            StudentAddress = reader.GetFieldValue<string>(2),
+                            StudentNo = reader.GetFieldValue<string>(3),
+                            DateOfBirth = reader.GetFieldValue<DateTime>(4),
+                            Age = reader.GetFieldValue<int>(5),
+                            Gender = reader.GetFieldValue<string>(6),
+                            ParentName = reader.GetFieldValue<string>(7),
+                            DateEnrolled = reader.GetFieldValue<DateTime>(8),
+                            IsActive = reader.GetFieldValue<bool>(9),
+                            Image = reader.GetFieldValue<string>(10),
+                            ClassId = reader.GetFieldValue<int>(11),
+                        });
+                    }
+                    conn.Dispose();
+                    conn.Close();
+                    return result;
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"An error occurred executing {nameof(GetAllStudents)}");
+                throw e;
+            }
+        }
+
         #endregion Students
 
         public async Task<List<Teachers>> GetAllTeachers()

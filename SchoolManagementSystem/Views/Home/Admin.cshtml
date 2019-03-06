@@ -59,64 +59,70 @@
     </div>
     <hr />
     <div class="row text-left">
-        <div class="col col-md-4 col-sm-4">
+        <div class="col col-md-6 col-sm-6">
             <!--Add Student Form-->
             <form class="hide-area" id="studentGrid">
                 @*<label class="label label-info" for="stdno">Student No</label>
-        <input class="form-control" type="text" id="stdno" name="stdno" disabled />*@
-                <label class="label label-info" for="stdname">Student Full Name</label>
-                <input class="form-control" type="text" autocomplete="off" placeholder="Enter Student's full name" id="stdname" name="stdname" />
-                <br />
-                <label class="label label-info" for="stdclass">Student Class</label>
-                <select class="form-control" id="stdclass" name="stdclass"></select>
-                <br />
-                <label class="label label-info" for="stddob">Student Date of Birth</label>
-                <input class="form-control" type="date" id="stddob" name="stddob" />
-                <br />
-                <label class="label label-info" for="stdaddress">Address/Location</label>
-                <input class="form-control" type="text" autocomplete="off" placeholder="Enter address here" id="stdaddress" name="stdaddress" />
-                <hr />
-                <label class="label label-info" for="stdparent">Parent/Guardian</label>
-                <input class="form-control" type="text" autocomplete="off" placeholder="Enter Parent's Name" id="stdparent" name="stdparent" />
-                <br />
-                <label class="label label-info" for="stdenrolldate">Date Enrolled</label>
-                <input class="form-control" type="date" id="stdenrolldate" name="stdenrolldate" />
-                <br />
-                <label class="label label-info" for="stdgender">Gender</label>
-                <select class="form-control" id="stdgender" name="stdgender">
-                    <option>--Select--</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                </select>
-                <br />
-                <label class="label label-info" for="stdimage">Student Image</label>
-                <input class="form-control btn-warning image-chooser" type="file" placeholder="Choose File" id="stdimage" name="stdimage" />
-                <p class="text text-danger">* Image must be 250cm x 180cm</p>
-                <br />
+                    <input class="form-control" type="text" id="stdno" name="stdno" disabled />*@
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                        <label class="label label-info" for="stdname">Student Full Name</label>
+                        <input class="form-control" type="text" autocomplete="off" placeholder="Enter Student's full name" id="stdname" name="stdname" />
+                        <br />
+                        <label class="label label-info" for="stdclass">Student Class</label>
+                        <select class="form-control" id="stdclass" name="stdclass"></select>
+                        <br />
+                        <label class="label label-info" for="stddob">Student Date of Birth</label>
+                        <input class="form-control" type="date" id="stddob" name="stddob" />
+                        <br />
+                        <label class="label label-info" for="stdaddress">Address/Location</label>
+                        <input class="form-control" type="text" autocomplete="off" placeholder="Enter address here" id="stdaddress" name="stdaddress" />
+                        <hr />
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                        <label class="label label-info" for="stdparent">Parent/Guardian</label>
+                        <input class="form-control" type="text" autocomplete="off" placeholder="Enter Parent's Name" id="stdparent" name="stdparent" />
+                        <br />
+                        <label class="label label-info" for="stdenrolldate">Date Enrolled</label>
+                        <input class="form-control" type="date" id="stdenrolldate" name="stdenrolldate" />
+                        <br />
+                        <label class="label label-info" for="stdgender">Gender</label>
+                        <select class="form-control" id="stdgender" name="stdgender">
+                            <option>--Select--</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                        <br />
+                        <label class="label label-info" for="stdimage">Student Image</label>
+                        <input class="form-control btn-warning image-chooser" type="file" placeholder="Choose File" id="stdimage" name="stdimage" />
+                        <p class="text text-danger">* Image must be 250cm x 180cm</p>
+                        <br />
+                    </div>
+                </div>
                 <button id="btn_stdcancel" class="btn btn-danger pull-right" type="submit"><span class="fa fa-times-circle"></span>&nbsp;Cancel</button>
                 <button id="btn_stdsave" class="btn btn-success pull-right" type="submit"><span class="fa fa-check-circle"></span>&nbsp;Save</button>
                 <button id="btn_finish_stud" class="btn btn-primary pull-left" type="submit"><span class="fa fa-close"></span>&nbsp;Finish</button>
             </form>
         </div>
-        <div class="col col-md-4 col-sm-4">
+        <div class="col col-md-3 col-sm-3">
             <!--Add Teachers Form-->
             <form class="hide-area" id="teacherGrid">
                 @*<label class="label label-info" for="txtid">Teacher No</label>
-        <input class="form-control" type="text" id="txtno" name="txtno" disabled />*@
+                    <input class="form-control" type="text" id="txtno" name="txtno" disabled />*@
 
                 <label class="label label-info" for="teachername">Teacher Full Name</label>
                 <input class="form-control" type="text" autocomplete="off" placeholder="Enter Teacher's full name" id="teachername" name="teachername" />
                 <br />
 
                 @*<label class="label label-info" for="teacherdob">Teacher's Date of Birth</label>
-                <input class="form-control" type="date" id="teacherdob" name="teacherdob" />
-                <br />*@
+                    <input class="form-control" type="date" id="teacherdob" name="teacherdob" />
+                    <br />*@
                 <label class="label label-info" for="teacheraddress">Address/Location</label>
                 <input class="form-control" type="text" autocomplete="off" placeholder="Enter address here" id="teacheraddress" name="teacheraddress" />
                 <br />
                 @*<label class="label label-info" for="teacherdate">Date Employed</label>
-                <input class="form-control" type="date" id="teacherdate" name="teacherdate" />
-                <br />*@
+                    <input class="form-control" type="date" id="teacherdate" name="teacherdate" />
+                    <br />*@
                 <label class="label label-info" for="teachersubject">Subject</label>
                 <select class="form-control" id="teachersubject" name="teachersubject"></select>
                 <br />
@@ -130,7 +136,7 @@
 
             </form>
         </div>
-        <div class="col col-md-4 col-sm-4">
+        <div class="col-md-3 col-sm-3 col-lg-3">
             <!--Add Subjects Form-->
             <form class="hide-area" id="subjectGrid">
                 <label class="label label-info" for="subjectname">Subject Name</label>

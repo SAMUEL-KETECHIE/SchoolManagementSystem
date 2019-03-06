@@ -53,6 +53,48 @@ namespace SchoolManagementSystem.Controllers.ApiControllers
             }
         }
 
+        [HttpPost]
+        public async Task<ResponseModel> GetStudents()
+        {
+            try
+            {
+                var result = await _dataHelper.GetAllStudents();
+                if (result != null)
+                {
+                    var response = new ResponseModel(result.ToArray(), result.Count());
+                    return response;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"An error occurred executing {nameof(GetAllStudents)},-{e.Message}");
+                return new ResponseModel(e.Message.ToString());
+                throw e;
+            }
+        }
+
+        [HttpGet]
+        public async Task<ResponseModel> GetStudentByInfo(string info)
+        {
+            try
+            {
+                var result = await _dataHelper.GetStudentByInfo(info);
+                if (result != null)
+                {
+                    var response = new ResponseModel(result.ToArray(), result.Count());
+                    return response;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"An error occurred executing {nameof(GetStudentByInfo)},-{e.Message}");
+                return new ResponseModel(e.Message.ToString());
+                throw e;
+            }
+        }
+
         [HttpGet]
         public async Task<ResponseModel> GetAllClasses()
         {

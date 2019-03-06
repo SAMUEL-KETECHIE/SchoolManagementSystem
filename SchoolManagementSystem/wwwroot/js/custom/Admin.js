@@ -15,12 +15,18 @@ let imageValue = "";
 $(function () {
     document.querySelector("#snack_bar_warning").style.display = "none";
     document.querySelector("#snack_bar_success").style.display = "none";
-
+    
     getAllClasses();
     getAllStudents();
     getAllTeachers();
     getAllSubjects();
 });
+
+function initDate() {
+    let today = new Date().toLocaleDateString("dd-MMM-yyyy");
+    $("#stddob").val(today);
+    $("#stdenrolldate").val(today);
+}
 //Image Uploading
 function UploadImage(dataFunc = null, fileid) {
     var formData = new FormData();
@@ -264,6 +270,7 @@ function showSnackBarWarning() {
 //Button Operations
 function showStudentGrid(e) {
     e.preventDefault();
+    initDate();
     let x = document.getElementById("studentGrid");
     x.className = "show";
     $("#addStudent").attr("disabled", "disabled");

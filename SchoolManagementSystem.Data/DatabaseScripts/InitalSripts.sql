@@ -1,6 +1,5 @@
 --Table Structures--
 create database preschool;
-use preschool;
 
 CREATE table "Role"(
   "RoleId" serial primary key,
