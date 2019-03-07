@@ -17,11 +17,11 @@
     </environment>
     <script src="~/custom/kendo/js/jquery.min.js"></script>
 
-
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/custom/lumino/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/custom/lumino/css/font-awesome.min.css" rel="stylesheet" />
     <link href="~/custom/wenstrap/wenstrap.css" rel="stylesheet" />
-    <link href="~/custom/lumino/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
 
     <link href="~/custom/lumino/css/styles.css" rel="stylesheet" />
     <link href="~/custom/wenstrap/custom.css" rel="stylesheet" />
@@ -54,10 +54,10 @@
         var user = ViewData["user"].ToString();
         var schName = "Wendolin Pre School";
     }
-    <nav class="navbar navbar-toggleable-sm navbar-light navbar-fixed-top bg-blue border-bottom box-shadow mb-3" role="navigation">
+    <nav class="navbar navbar-toggleable-sm navbar-light navbar-fixed-top bg-blue border-bottom box-shadow mb-3" role="navigation" style="height:18px;">
         <div class="container-fluid text-left">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">@schName</a>
-            <div class="navbar-header">
+            <a class="navbar-brand  pull-left" style="height:15px;text-align:justify;" asp-area="" asp-controller="Home" asp-action="Index">@schName</a>
+            <div class="navbar-header pull-left">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse"
                         aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -131,7 +131,7 @@
 
 
     <div class="container">
-        <partial name="_CookieConsentPartial" />
+        @*<partial name="_CookieConsentPartial" />*@
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -144,7 +144,7 @@
             </div>
         </footer>*@
 
-    @*<environment include="Development">
+    <environment include="Development">
             <script src="~/lib/jquery/dist/jquery.js"></script>
             <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
         </environment>
@@ -161,7 +161,7 @@
                     crossorigin="anonymous"
                     integrity="sha256-E/V4cWE4qvAeO5MOhjtGtqDzPndRO1LBk8lJ/PR7CA4=">
             </script>
-        </environment>*@
+        </environment>
 
     <script src="~/js/site.js" asp-append-version="true"></script>
 

@@ -1,20 +1,15 @@
 ﻿/*
  * Creator: Samuel Wendolin Ketechie
- * Date: March 5,2019
+ * Date: March 7,2019
  */
 
 let apiUrl = "/api/admin";
 
-let students = {};
-let classes = {};
-let num = {
-    info: "WENSCHSTU0001"
-};
+let teachers = {};
+let subjects = {};
 
 $(function () {
-    // document.querySelector("#snack_bar_warning").style.display = "none";
-    //document.querySelector("#snack_bar_success").style.display = "none";
-    getAllClasses();
+    getAllSubjects();
 });
 
 function getAllClasses() {
@@ -32,78 +27,105 @@ function getAllClasses() {
     });
 }
 
+//(1)
+function searchTeacher(searchObj) {
+    $.ajax({
+        url: apiUrl + "/getteacherbyinfo?info=" + searchObj.info,
+        type: "Get",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (result) {
+            if (result !== null) {
+                teachers = result.data;
+                renderGrid(teachers);
+            }
+        }
+    });
+}
+
+
 //(2)
-function getStudentBySearch(e) {
+function getTeacherBySearch(e) {
     e.preventDefault();
     var keyActionClick = e.type === 'click';
     if ((e.type === 'keyup' && e.which === 13) || keyActionClick === true) {
-        var search = $("#txtSearch").val();
+        var search = $("#txtSearchTeacher").val();
         if (search === "" || search.length === 0 || search === null) {
-            getAllStudents();
+            getAllTeachers();
         }
         else {
             searchObj = {
                 info: search
             };
-            searchStudent(searchObj);
+            searchTeacher(searchObj);
         }
     }
 }
 
-$("#txtSearch").on('keyup', getStudentBySearch);
-$("#btnSearch").on('click', getStudentBySearch);
-//(1)
-function searchStudent(searchObj) {
+$("#txtSearchTeacher").on('keyup', getTeacherBySearch);
+$("#btnSearchTeacher").on('click', getTeacherBySearch);
+
+//Get all Teachers
+function getAllTeachers() {
     $.ajax({
-        url: apiUrl + "/getstudentbyinfo?info=" + searchObj.info,
+        url: apiUrl + "/getallteachers",
         type: "Get",
         dataType: "json",
         contentType: "application/json",
-        success: function (result) {
-            if (result !== null) {
-                students = result;
-                renderGrid(students);
+        success: function (data) {
+            if (data !== null) {
+                teachers = data.data;
+                renderGrid(teachers);
             }
         }
     });
 }
 
-function getAllStudents() {
+function getAllSubjects() {
     $.ajax({
-        url: apiUrl + "/getallstudents",
+        url: apiUrl + "/getallsubjects",
         type: "Get",
         dataType: "json",
         contentType: "application/json",
-        success: function (result) {
-            if (result !== null) {
-                students = result;
-                renderGrid(students);
+        success: function (data) {
+            if (data !== null) {
+                subjects = data.data;
+                getAllTeachers();
             }
         }
     });
 }
 
-function renderGrid(stdData) {
+function subjectEditor(container, options) {
+    $('<input type="text" id="subject" readonly data-bind="value:' + options.field + '"/>')
+        .appendTo(container)
+        .width('100%')
+        .kendoComboBox({
+            dataSource: subjects,
+            dataValueField: "subjectId",
+            dataTextField: "subjectName",
+            highlightFirst: true,
+            suggest: true,
+            optionLabel: ""
+        });
+}
+
+function renderGrid(teacherData) {
     let todayDate = new Date().toString();
-    let exportedData = "Students_As_At_" + todayDate;
+    let exportedData = "Teachers_As_At_" + todayDate;
     let fields = {
-        studentId: { editable: false, validation: { required: true } },
-        studentName: { editable: true, validation: { required: true },height:40 },
-        studentAddress: { editable: true, validation: { required: false }, height: 40 },
-        studentNo: { editable: true, validation: { required: false } },
-        dateOfBirth: { editable: true, validation: { required: false } },
-        age: { editable: true, validation: { required: false } },
-        gender: { editable: true, validation: { required: false } },
-        parentName: { editable: true, validation: { required: false } },
-        dateEnrolled: { editable: true, validation: { required: false } },
+        teacherId: { editable: false, validation: { required: true } },
+        teacherName: { editable: true, validation: { required: true }, height: 40 },
+        teacherAddress: { editable: true, validation: { required: false }, height: 40 },
+        teacherNo: { editable: true, validation: { required: false } },
         isActive: { editable: true, validation: { required: false } },
         image: { editable: true, validation: { required: false } },
-        classId: { editable: true, validation: { required: false } }
+        subjectId: { editable: true, validation: { required: false } }
     };
     let data_source = {
         transport: {
             read: function (entries) {
-                entries.data = stdData.data;
+                entries.data = teacherData;
                 entries.success(entries.data);
             },
             create: function (entries) {
@@ -121,7 +143,7 @@ function renderGrid(stdData) {
         },
         schema: {
             model: {
-                id: "studentId",
+                id: "teacherId",
                 fields: fields
             }
         },
@@ -130,7 +152,7 @@ function renderGrid(stdData) {
         serverSorting: true
     };
 
-    $("#studentsGrid").kendoGrid({
+    $("#teachersGrid").kendoGrid({
         toolbar: ["pdf", "excel"],
         pdf: {
             fileName: exportedData + ".pdf",
@@ -150,47 +172,21 @@ function renderGrid(stdData) {
         dataSource: data_source,
         columns: [
             {
-                field: "studentName",
-                title: "Student Name",
+                field: "teacherName",
+                title: "Teacher's Name",
                 width: 125
             },
             {
-                field: "studentNo",
-                title: "Student No.",
-                width: 120
+                field: "teacherNo",
+                title: "Teacher No.",
+                width: 155
             },
             {
-                field: "studentAddress",
+                field: "teacherAddress",
                 title: "Address/Location",
                 width: 250
             },
-            {
-                field: "dateOfBirth",
-                title: "Date Of Birth",
-                template: "#= kendo.toString(kendo.parseDate(dateOfBirth, 'yyyy-MM-dd'), 'dd MMM yyyy') #",
-                width: 100
-            },
-            {
-                field: "age",
-                title: "Age",
-                width: 50
-            },
-            {
-                field: "gender",
-                title: "Gender",
-                width: 60
-            },
-            {
-                field: "parentName",
-                title: "Parent/Guardian",
-                width: 125
-            },
-            {
-                field: "dateEnrolled",
-                title: "Date Enrolled",
-                template: "#= kendo.toString(kendo.parseDate(dateEnrolled, 'yyyy-MM-dd'), 'dd MMM yyyy') #",
-                width: 100
-            },
+
             {
                 field: "isActive",
                 title: "Active?",
@@ -204,10 +200,11 @@ function renderGrid(stdData) {
                 template: '<img src="#=image #" alt="image" class="img-responsive img-circle"/>'
             },
             {
-                field: "classId",
-                title: "Class",
+                field: "subjectId",
+                title: "Default Subject",
                 width: 100,
-                template: '#= getClass(classId) #'
+                editor: subjectEditor,
+                template: '#= getSubject(subjectId) #'
             },
             {
                 command: [
@@ -225,7 +222,7 @@ function renderGrid(stdData) {
                         // click: 
                     }
                 ],
-                width: 120
+                width: 100
             }
         ],
         resizable: true,
@@ -233,7 +230,7 @@ function renderGrid(stdData) {
         scrollable: true,
         pageable: {
             pageSize: 50,
-            pageSizes: [50, 100, 250, 500, 750, 1000, 1500],
+            pageSizes: [50, 100],
             previousNext: true,
             buttonCount: 5
         },
@@ -242,11 +239,10 @@ function renderGrid(stdData) {
     });
 }
 
-function getClass(id) {
-    for (let i = 0; i < classes.length; i++) {
-        if (classes[i].classId === id) {
-            return classes[i].className;
+function getSubject(id) {
+    for (let i = 0; i < subjects.length; i++) {
+        if (subjects[i].subjectId === id) {
+            return subjects[i].subjectName;
         }
     }
 }
-

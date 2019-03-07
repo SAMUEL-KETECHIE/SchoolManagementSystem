@@ -106,12 +106,17 @@
     background: #ff0000;
 }
 
-#txtSearch {
+#txtSearch, .txtSearch {
     width: 350px;
     height: 35px;
-    margin-right: -8px;
-    border-radius: 5px;
+    margin-right: -20px;
     text-decoration-style: none;
+    font-family:'Times New Roman', Times, serif;
+    border-radius: 5px;
+}
+
+.buttSearch {
+    border-radius:5px;
 }
 
 .hide-area {
@@ -125,7 +130,7 @@
 /* Template Days */
 
 #calendar {
-    width: 100%;
+    width: 80%;
 }
 
 #special-days {

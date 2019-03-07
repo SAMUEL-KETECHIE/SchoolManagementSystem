@@ -138,6 +138,28 @@ namespace SchoolManagementSystem.Controllers.ApiControllers
         }
 
         [HttpGet]
+        public async Task<ResponseModel> GetTeacherByInfo(string info)
+        {
+            try
+            {
+                //Shall be continued
+                var result = await _dataHelper.GetAllTeachers();
+                if (result != null)
+                {
+                    var response = new ResponseModel(result.ToArray(), result.Count());
+                    return response;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"An error occurred executing {nameof(GetTeacherByInfo)},-{e.Message}");
+                return new ResponseModel(e.Message.ToString());
+                throw e;
+            }
+        }
+
+        [HttpGet]
         public async Task<ResponseModel> GetAllSubjects()
         {
             try

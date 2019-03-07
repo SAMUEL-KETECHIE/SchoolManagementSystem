@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewData["Title"] = "Teachers Page";
+    ViewBag.CurrentPage = "Teachers";
+    var user = ViewData["user"];
+
+}
+
+
+<div>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="" id="inputBox">
+                <b class="text">Search Teacher&nbsp;:&nbsp;&nbsp;</b>
+                <input type="text" class="txtSearch" id="txtSearchTeacher" placeholder="Search Name, Teacher No. or Addrress" />
+                <button id="btnSearchTeacher" class="buttSearch btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-lg-12">
+            <div class="k-grid" id="teachersGrid"></div>
+        </div>
+    </div>
+
+</div>
+<style type="text/css">
+    #inputBox, .k-grid {
+        font-family: Arial, 'Karla','Poppins', sans-serif;
+    }
+
+    /* Hide the Grid header and pager during export */
+    .k-pdf-export .k-grid-toolbar,
+    .k-pdf-export .k-pager-wrap {
+        display: none;
+    }
+
+    #teachersGrid {
+        font-size: 11px;
+    }
+</style>
+<section>
+    <script src="~/js/custom/Teacher.js"></script>
+</section>
