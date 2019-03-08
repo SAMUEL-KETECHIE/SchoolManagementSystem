@@ -117,6 +117,27 @@ namespace SchoolManagementSystem.Controllers.ApiControllers
         }
 
         [HttpGet]
+        public async Task<ResponseModel> GetClassByInfo(string info)
+        {
+            try
+            {
+                var result = await _dataHelper.GetClassByInfo(info);
+                if (result != null)
+                {
+                    var response = new ResponseModel(result.ToArray(), result.Count());
+                    return response;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"An error occurred executing {nameof(GetClassByInfo)},-{e.Message}");
+                return new ResponseModel(e.Message.ToString());
+                throw e;
+            }
+        }
+
+        [HttpGet]
         public async Task<ResponseModel> GetAllTeachers()
         {
             try
@@ -143,7 +164,7 @@ namespace SchoolManagementSystem.Controllers.ApiControllers
             try
             {
                 //Shall be continued
-                var result = await _dataHelper.GetAllTeachers();
+                var result = await _dataHelper.GetTeacherByInfo(info);
                 if (result != null)
                 {
                     var response = new ResponseModel(result.ToArray(), result.Count());
@@ -180,6 +201,26 @@ namespace SchoolManagementSystem.Controllers.ApiControllers
             }
         }
 
+        [HttpGet]
+        public async Task<ResponseModel> GetSubjectByInfo(string info)
+        {
+            try
+            {
+                var result = await _dataHelper.GetSubjectByInfo(info);
+                if (result != null)
+                {
+                    var response = new ResponseModel(result.ToArray(), result.Count());
+                    return response;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"An error occurred executing {nameof(GetSubjectByInfo)},-{e.Message}");
+                return new ResponseModel(e.Message.ToString());
+                throw e;
+            }
+        }
         #endregion Fetch
 
 

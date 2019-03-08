@@ -97,7 +97,7 @@ function getAllSubjects() {
 }
 
 function subjectEditor(container, options) {
-    $('<input type="text" id="subject" readonly data-bind="value:' + options.field + '"/>')
+    $('<input type="text" readonly data-bind="value:' + options.field + '"/>')
         .appendTo(container)
         .width('100%')
         .kendoComboBox({

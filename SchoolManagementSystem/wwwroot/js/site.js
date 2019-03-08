@@ -6,7 +6,7 @@
 let btt = $('.back-to-top');
 $(window).on('scroll', function () {
     let self = $(this),
-        height = self.height(),
+        height = self.height()+100,
         top = self.scrollTop();
 
     if (top > height) {

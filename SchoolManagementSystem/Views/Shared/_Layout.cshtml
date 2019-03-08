@@ -54,9 +54,9 @@
         var user = ViewData["user"].ToString();
         var schName = "Wendolin Pre School";
     }
-    <nav class="navbar navbar-toggleable-sm navbar-light navbar-fixed-top bg-blue border-bottom box-shadow mb-3" role="navigation" style="height:18px;">
-        <div class="container-fluid text-left">
-            <a class="navbar-brand  pull-left" style="height:15px;text-align:justify;" asp-area="" asp-controller="Home" asp-action="Index">@schName</a>
+    <nav class="navbar navbar-toggleable-sm navbar-light navbar-fixed-top bg-blue border-bottom box-shadow mb-3" role="navigation">
+        <div class="container-fluid">
+            <a class="navbar-brand btn btn-sm btn-outline-secondary" asp-area="" asp-controller="Home" asp-action="Index">@schName</a>
             <div class="navbar-header pull-left">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse"
                         aria-controls="navbarSupportedContent"
@@ -144,7 +144,7 @@
             </div>
         </footer>*@
 
-    <environment include="Development">
+    @*<environment include="Development">
             <script src="~/lib/jquery/dist/jquery.js"></script>
             <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
         </environment>
@@ -161,7 +161,7 @@
                     crossorigin="anonymous"
                     integrity="sha256-E/V4cWE4qvAeO5MOhjtGtqDzPndRO1LBk8lJ/PR7CA4=">
             </script>
-        </environment>
+        </environment>*@
 
     <script src="~/js/site.js" asp-append-version="true"></script>
 

@@ -115,6 +115,7 @@ namespace SchoolManagementSystem.Data.Helpers
 
         #endregion Students
 
+        #region Teachers Queries
         public async Task<List<Teachers>> GetAllTeachers()
         {
             try
@@ -153,6 +154,50 @@ namespace SchoolManagementSystem.Data.Helpers
             }
         }
 
+        public async Task<List<Teachers>> GetTeacherByInfo(string info)
+        {
+            try
+            {
+                using (var conn = new NpgsqlConnection(_ConnectionStr))
+                {
+                    var result = new List<Teachers>();
+                    var command = _dbHelper.CreateCommand("getteacherbyinfo", _ConnectionStr);
+                    //command.Parameters.Add("info", NpgsqlTypes.NpgsqlDbType.Text);
+
+                    command.Parameters.AddWithValue("info", NpgsqlTypes.NpgsqlDbType.Text, info);
+                    conn.Open();
+                    var reader = await command.ExecuteReaderAsync();
+
+                    while (reader.Read())
+                    {
+                        result.Add(new Teachers
+                        {
+                            TeacherId = reader.GetFieldValue<int>(0),
+                            TeacherName = reader.GetFieldValue<string>(1),
+                            TeacherNo = reader.GetFieldValue<string>(2),
+                            TeacherAddress = reader.GetFieldValue<string>(3),
+                            Image = reader.GetFieldValue<string>(4),
+                            IsActive = reader.GetFieldValue<bool>(5),
+                            SubjectId = reader.GetFieldValue<int>(6)
+                        });
+                    }
+                    conn.Dispose();
+                    conn.Close();
+                    return result;
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"An error occurred executing {nameof(GetTeacherByInfo)},-{e.Message}");
+                throw e;
+            }
+        }
+
+        #endregion Teachers
+
+        #region Subjects Queries
         public async Task<List<Subjects>> GetAllSubjects()
         {
             try
@@ -186,6 +231,41 @@ namespace SchoolManagementSystem.Data.Helpers
             }
         }
 
+        public async Task<List<Subjects>> GetSubjectByInfo(string info)
+        {
+            try
+            {
+                using (var conn = new NpgsqlConnection(_ConnectionStr))
+                {
+                    var result = new List<Subjects>();
+                    var command = _dbHelper.CreateCommand("getsubjectbyinfo", _ConnectionStr);
+                    command.Parameters.AddWithValue("info", NpgsqlTypes.NpgsqlDbType.Text, info);
+                    conn.Open();
+                    var reader = await command.ExecuteReaderAsync();
+
+                    while (reader.Read())
+                    {
+                        result.Add(new Subjects
+                        {
+                            SubjectId = reader.GetFieldValue<int>(0),
+                            SubjectName = reader.GetFieldValue<string>(1)
+                        });
+                    }
+                    conn.Dispose();
+                    conn.Close();
+                    return result;
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"An error occurred executing {nameof(GetSubjectByInfo)},-{e.Message}");
+                throw e;
+            }
+        }
+
+        #endregion Subjects
         public async Task<List<Users>> GetAllUsers()
         {
             try
@@ -221,7 +301,7 @@ namespace SchoolManagementSystem.Data.Helpers
                 throw e;
             }
         }
-
+        #region Classes Queries
         public async Task<List<Classes>> GetAllClasses()
         {
             try
@@ -254,6 +334,42 @@ namespace SchoolManagementSystem.Data.Helpers
                 throw e;
             }
         }
+
+        public async Task<List<Classes>> GetClassByInfo(string info)
+        {
+            try
+            {
+                using (var conn = new NpgsqlConnection(_ConnectionStr))
+                {
+                    var result = new List<Classes>();
+                    var command = _dbHelper.CreateCommand("getclassbyinfo", _ConnectionStr);
+                    command.Parameters.AddWithValue("info", NpgsqlTypes.NpgsqlDbType.Text, info);
+                    conn.Open();
+                    var reader = await command.ExecuteReaderAsync();
+
+                    while (reader.Read())
+                    {
+                        result.Add(new Classes
+                        {
+                            ClassId = reader.GetFieldValue<int>(0),
+                            ClassName = reader.GetFieldValue<string>(1)
+                        });
+                    }
+                    conn.Dispose();
+                    conn.Close();
+                    return result;
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"An error occurred executing {nameof(GetClassByInfo)}");
+                throw e;
+            }
+        }
+
+        #endregion Classes
 
         public async Task<List<Role>> GetAllRoles()
         {

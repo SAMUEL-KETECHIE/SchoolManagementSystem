@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Classes Page";
+    ViewBag.CurrentPage = "Classes";
+    var user = ViewData["user"];
+
+}
+
+<div>
+    <h3 class=" text-lg-left">Available Classes</h3>
+    <br />
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="" id="inputClassArea">
+                <b class="text">Search for Class&nbsp;:&nbsp;&nbsp;</b>
+                <input type=text id="txtSearchClass" class="txtSearch" placeholder="  Type Class Name..." />
+                <button id="btnSearchClass" class="btn btn-primary"><span class="buttSearch glyphicon glyphicon-search" aria-hidden="true"></span></button>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-lg-12">
+            <div class="k-grid" id="classesGrid"></div>
+        </div>
+    </div>
+</div>
+
+<style type="text/css">
+    #inputClassArea, .k-grid {
+        font-family: Arial, 'Karla','Poppins', sans-serif;
+    }
+
+    /* Hide the Grid header and pager during export */
+    .k-pdf-export .k-grid-toolbar,
+    .k-pdf-export .k-pager-wrap {
+        display: none;
+    }
+
+    #classesGrid {
+        font-size: 11px;
+    }
+</style>
+<section>
+    <script src="~/js/custom/Class.js"></script>
+</section>

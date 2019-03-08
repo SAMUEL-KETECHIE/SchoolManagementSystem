@@ -212,30 +212,48 @@ create or replace function addrole(rolename text)
 create or replace function getstudentbyinfo(info text) returns SETOF "Students"
 	language plpgsql
 as $$
+  declare str text;
 BEGIN
-  RETURN QUERY SELECT * from "Students" where "StudentName" like info or "StudentNo" like info or "StudentAddress" like info;
+    str=concat('%',info,'%');
+  RETURN QUERY SELECT * from "Students" where "StudentName" like str or "StudentNo" like str or "StudentAddress" like str or "ParentName" like str or "Gender" like str;
 END;
 $$;
 
---select * from getstudentbyinfo('Legon,Accra');
+select * from getstudentbyinfo('Sam');
 
 create or replace function getteacherbyinfo(info text) returns SETOF "Teachers"
 	language plpgsql
 as $$
+   declare str text;
 BEGIN
-  RETURN QUERY SELECT * from "Teachers" where "TeacherName" like info or "TeacherNo" like info or "TeacherAddress" like info;
+    str=concat('%',info,'%');
+  RETURN QUERY SELECT * from "Teachers" where "TeacherName" like str or "TeacherNo" like str or "TeacherAddress" like str;
 END;
 $$;
 
---select * from getteacherbyinfo('Alfred Barnor');
+--select * from getteacherbyinfo('Alfred');
 
 create or replace function getsubjectbyinfo(info text) returns SETOF "Subjects"
 	language plpgsql
 as $$
+    declare str text;
 BEGIN
-  RETURN QUERY SELECT * from "Subjects" where "SubjectName" like info;
+  str=concat('%',info,'%');
+  RETURN QUERY SELECT * from "Subjects" where "SubjectName" like str;
 END;
 $$;
 
--- * from getsubjectbyinfo('Mathematics');
+--select * from getsubjectbyinfo('Mathema');
 
+create or replace function getclassbyinfo(info text) returns SETOF "Classes"
+  language plpgsql
+as
+$$
+  declare str text;
+BEGIN
+    str=concat('%',info,'%');
+  RETURN QUERY SELECT * from "Classes" where "ClassName" like str;
+END;
+$$;
+
+--select * from getclassbyinfo('Prim');
