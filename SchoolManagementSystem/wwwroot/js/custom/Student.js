@@ -194,7 +194,7 @@ function renderGrid(stdData) {
             {
                 field: "isActive",
                 title: "Active?",
-                template: '<input type="checkbox" #= isActive ? \'checked="isActive"\' : "" # disabled="disabled" />',
+                template: '<input class="pull-right" type="checkbox" #= isActive ? \'checked="isActive"\' : "" # disabled="disabled" />',
                 width: 60
             },
             {
